@@ -1,26 +1,30 @@
-for (let i = 1; i <=20; ++i) {
-    if (i % 3 === 0 && i % 5 ===0) {
-        console.log(`${i} -> Frontend Simplified`)
-    }
-    else if (i % 3 === 0) {
-        console.log(`${i} -> Frontend`)
-    }
-    else if (i % 5 === 0) {
-        console.log(`${i} -> Simplified`)
-    }
-    else {
-        console.log(`${i} -> ${i}`)
-    }
+const statusRef = document.querySelector(".status");
+
+function getSubscriptionStatus() {
+    return new Promise ((resolve, reject) => {
+        setTimeout(() => {
+            resolve("VIP");
+        }, 2000);
+    });
 }
 
-const str = "Frontend Simplified"
-
-for (let i = 0; i < str.length; ++i) {
-    console.log(str[i])
+function getVideo(subscriptionStatus) {
+  return new Promise((resolve, reject) => {
+    if (subscriptionStatus === "VIP") {
+      resolve("show video")
+    } 
+    else if (subscriptionStatus === "FREE") {
+      resolve("show trailer")
+    } else {
+      reject("no video")
+    }
+  })
 }
 
-function welcomePersonToFES (firstName, lastName) {
-    console.log(`Welcome to FES ${firstName} ${lastName}`)
+async function main() {
+    const status = await getSubscriptionStatus();
+    statusRef.innerHTML = status;
+    console.log(await getVideo(status))
 }
 
-welcomePersonToFES ("Alex", "Arrington")
+main();
